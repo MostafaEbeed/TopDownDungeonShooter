@@ -12,11 +12,13 @@ public class ShopItemUI : MonoBehaviour
 
     private BaseItemSO itemData;
     private ShopManager shopManager;
+    private PlayerInventory inventory;
 
     public void Setup(BaseItemSO item, ShopManager manager)
     {
         itemData = item;
         shopManager = manager;
+        inventory = shopManager.GetPlayerInventory();
 
         itemIcon.sprite = item.icon;
         buyButton.onClick.AddListener(OnBuyClicked);
@@ -27,24 +29,19 @@ public class ShopItemUI : MonoBehaviour
 
     private void RefreshUI()
     {
-        if (itemData.isOwned)
-        {
-            buyButton.gameObject.SetActive(false);
-            upgradeButton.gameObject.SetActive(true);
-            upgradeCostText.text = $"Upgrade: {itemData.upgradeCost}💰";
-        }
-        else
-        {
-            buyButton.gameObject.SetActive(true);
-            upgradeButton.gameObject.SetActive(false);
-        }
+        bool owned = inventory.OwnsItem(itemData);
+
+        buyButton.gameObject.SetActive(!owned);
+        upgradeButton.gameObject.SetActive(owned);
+
+        if (owned)
+            upgradeCostText.text = $"Upgrade: {itemData.upgradeCost}";
     }
 
     private void OnBuyClicked()
     {
         if (shopManager.TryPurchaseItem(itemData))
         {
-            itemData.isOwned = true;
             RefreshUI();
         }
     }

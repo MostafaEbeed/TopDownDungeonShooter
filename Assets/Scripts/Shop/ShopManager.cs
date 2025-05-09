@@ -37,9 +37,11 @@ public class ShopManager : MonoBehaviour
 
     public ShopSO GetCurrentShop() => currentShop;
     
+    public PlayerInventory GetPlayerInventory() => playerInventory;
+    
     public bool TryUpgradeItem(BaseItemSO item)
     {
-        if (!item.isOwned || playerInventory.currency < item.upgradeCost)
+        if (!playerInventory.OwnsItem(item) || playerInventory.currency < item.upgradeCost)
             return false;
 
         item.Upgrade();

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a2172283f7d244f8dd2437de82e4ba, type: 3}
-  m_Name: NewWeapon
+  m_Script: {fileID: 11500000, guid: 5cffe49237a034d4da02278f8638bb7e, type: 3}
+  m_Name: NewAbility 1
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,13 +21,14 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  icon: {fileID: 21300000, guid: 8a1d5c60915e682498ccc6618da10e7c, type: 3}
-  itemName: AK-47
+  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  itemName: 
   cost: 0
-  upgradeCost: 100
-  isOwned: 0
-  weaponPrefab: {fileID: 0}
-  weaponStats:
-    fireRate: 0.1
-    damage: 10
-    ammoCapacity: 100
+  upgradeCost: 0
+  level: 1
+  abilityPrefab: {fileID: 0}
+  abilityStats:
+    duration: 0
+    cooldown: 0
+    description: 
+  abilityType: 1

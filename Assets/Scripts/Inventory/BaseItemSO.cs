@@ -7,25 +7,25 @@ public abstract class BaseItemSO : SerializedScriptableObject
     [PreviewField(64), HideLabel]
     public Sprite icon;
 
-    [VerticalGroup("General Info/Split/Right")]
+    [BoxGroup("General Info")]
     [LabelText("Name"), Required]
     public string itemName;
 
     [BoxGroup("General Info")]
     [LabelText("Cost"), MinValue(0)]
     public int cost;
-    
+
     [BoxGroup("Upgrade Info")]
-    [LabelText("Upgrade Cost")]
+    [LabelText("Upgrade Cost"), MinValue(0)]
     public int upgradeCost;
-    
-    [BoxGroup("Runtime")]
-    [ReadOnly]
-    public bool isOwned;
+
+    [BoxGroup("Progression")]
+    [LabelText("Level"), MinValue(1)]
+    public int level = 1;
 
     public virtual void Upgrade()
     {
-        // Logic for upgrade goes here (will be defined per type later)
-        upgradeCost += Mathf.CeilToInt(upgradeCost * 0.5f); // Example: increase upgrade cost
+        level++;
+        upgradeCost = Mathf.CeilToInt(upgradeCost * 1.5f); 
     }
 }
