@@ -8,6 +8,9 @@ public class WeaponSO : BaseItemSO
     [Required, LabelText("Weapon Prefab")]
     public GameObject weaponPrefab;
 
+    [BoxGroup("Weapon Data"), Required]
+    public GameObject bulletPrefab;
+    
     [BoxGroup("Weapon Stats")]
     [InlineProperty, HideLabel]
     public WeaponStats weaponStats;

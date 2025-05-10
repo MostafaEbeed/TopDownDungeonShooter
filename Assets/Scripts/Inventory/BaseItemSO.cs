@@ -22,6 +22,8 @@ public abstract class BaseItemSO : SerializedScriptableObject
     [BoxGroup("Progression")]
     [LabelText("Level"), MinValue(1)]
     public int level = 1;
+    
+    public int maxLevel = 5;
 
     public virtual void Upgrade()
     {

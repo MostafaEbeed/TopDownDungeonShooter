@@ -25,9 +25,11 @@ MonoBehaviour:
   itemName: wea
   cost: 0
   upgradeCost: 100
-  isOwned: 1
-  weaponPrefab: {fileID: 0}
+  level: 1
+  maxLevel: 5
+  weaponPrefab: {fileID: 1396424805824408, guid: f433d0001616bb4448a24a67d07cc7e9, type: 3}
+  bulletPrefab: {fileID: 1859234679933314, guid: 4700ce61fd21e32439977dd4e8211f37, type: 3}
   weaponStats:
-    fireRate: 0.1
-    damage: 10
+    fireRate: 0.7
+    damage: 20
     ammoCapacity: 100

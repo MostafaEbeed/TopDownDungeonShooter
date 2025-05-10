@@ -1,15 +1,22 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [Header("Inventory UI")]
+    [Tooltip("Drag the root Canvas or Panel for your inventory UI here")]
+    [SerializeField] private GameObject inventoryCanvas;
+    
     public int currency;
 
     public List<WeaponSO> ownedWeapons = new();
     public List<GadgetSO> ownedGadgets = new();
     public List<AbilitySO> ownedAbilities = new();
 
-    public List<WeaponSO> equippedWeapons = new();     
+    public List<WeaponSO> equippedWeapons = new();  
+    public int currentWeaponIndex = 0;
+    
     public List<GadgetSO> equippedGadgets = new();     
     public List<AbilitySO> equippedActiveAbilities = new(); 
     public List<AbilitySO> equippedPassiveAbilities = new(); 
@@ -17,6 +24,38 @@ public class PlayerInventory : MonoBehaviour
     public int maxActiveAbilities = 2;
     public int maxWeapons = 2;
     public int maxGadgets = 2;
+
+    private bool isInventoryVisible = false;
+
+    private void Start()
+    {
+       // TryEquipWeapon(equippedWeapons[0]); // for testing
+    }
+
+    #region Inventory UI Toggle
+    public void ToggleInventoryUI()
+    {
+        if (inventoryCanvas == null) return;
+        isInventoryVisible = !isInventoryVisible;
+        inventoryCanvas.SetActive(isInventoryVisible);
+    }
+
+    public void ShowInventoryUI()
+    {
+        if (inventoryCanvas == null) return;
+        isInventoryVisible = true;
+        inventoryCanvas.SetActive(true);
+    }
+
+    public void HideInventoryUI()
+    {
+        if (inventoryCanvas == null) return;
+        isInventoryVisible = false;
+        inventoryCanvas.SetActive(false);
+    }
+    #endregion
+    
+    #region Items
 
     public bool OwnsItem(BaseItemSO item)
     {
@@ -69,6 +108,8 @@ public class PlayerInventory : MonoBehaviour
                        : equippedPassiveAbilities.Contains(a))
                );
     }
+
+    #endregion
     
     #region Currency
     public void AddCurrency(int amount) => currency += amount;
@@ -106,6 +147,24 @@ public class PlayerInventory : MonoBehaviour
     {
         AddWeapon(weapon);
         return equippedWeapons.Remove(weapon);
+    }
+    
+    public void SwitchToNextWeapon()
+    {
+        if (equippedWeapons.Count == 0) return;
+        currentWeaponIndex = (currentWeaponIndex + 1) % equippedWeapons.Count;
+    }
+
+    public void SwitchToPrevWeapon()
+    {
+        if (equippedWeapons.Count == 0) return;
+        currentWeaponIndex = (currentWeaponIndex - 1 + equippedWeapons.Count) % equippedWeapons.Count;
+    }
+
+    public WeaponSO GetCurrentWeapon()
+    {
+        if (equippedWeapons.Count == 0) return null;
+        return equippedWeapons[currentWeaponIndex];
     }
     #endregion
 

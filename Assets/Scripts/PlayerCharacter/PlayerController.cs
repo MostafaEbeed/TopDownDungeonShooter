@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private PlayerControls controls;
     private PlayerMovement movement;
     private TimeSlowManager timeSlow;
+    private PlayerInventory inventory;
+    private WeaponSwitcher switcher;
 
     private bool isHoldingAbility = false;
     private bool isHoldingGadget = false;
@@ -17,6 +19,8 @@ public class PlayerController : MonoBehaviour
         controls = new PlayerControls();
         movement = GetComponent<PlayerMovement>();
         timeSlow = GetComponent<TimeSlowManager>();
+        switcher    = GetComponent<WeaponSwitcher>();
+        inventory   = FindObjectOfType<PlayerInventory>();
         
         // Movement
         controls.Gameplay.Move.performed += ctx => movement.SetMoveInput(ctx.ReadValue<Vector2>());
@@ -26,6 +30,13 @@ public class PlayerController : MonoBehaviour
         controls.Gameplay.FireLeft.performed += _ => Fire(Hand.Left);
         controls.Gameplay.FireRight.performed += _ => Fire(Hand.Right);
 
+        // Inventory toggle (make sure you have this action in your InputActions)
+        controls.Gameplay.ToggleInventory.performed += _ => inventory.ToggleInventoryUI();
+        
+        //Weapon Switching
+        controls.Gameplay.SwitchWeaponNext.performed += _ => OnNext();
+        controls.Gameplay.SwitchWeaponPrevious.performed += _ => OnPrev();
+        
         // Abilities
         controls.Gameplay.HoldAbility.performed += _ =>
         {
@@ -68,6 +79,18 @@ public class PlayerController : MonoBehaviour
         // WeaponController.Fire(hand);
     }
 
+    private void OnNext()
+    {
+        inventory.SwitchToNextWeapon();
+        switcher.EquipCurrentWeapon(controls);
+    }
+
+    private void OnPrev()
+    {
+        inventory.SwitchToPrevWeapon();
+        switcher.EquipCurrentWeapon(controls);
+    }
+    
     void ShowAbilityWheel(bool show) => Debug.Log("Ability Wheel: " + show);
     void ActivateAbility(int index) => Debug.Log("Activate Ability " + index);
     void ShowGadgetWheel(bool show) => Debug.Log("Gadget Wheel: " + show);

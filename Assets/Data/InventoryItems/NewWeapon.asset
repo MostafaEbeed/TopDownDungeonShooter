@@ -25,9 +25,11 @@ MonoBehaviour:
   itemName: AK-47
   cost: 0
   upgradeCost: 100
-  isOwned: 0
-  weaponPrefab: {fileID: 0}
+  level: 1
+  maxLevel: 5
+  weaponPrefab: {fileID: 1296539039355890, guid: bb62562daeb1b0b4fadc309402d5c4a5, type: 3}
+  bulletPrefab: {fileID: 1859234679933314, guid: 4700ce61fd21e32439977dd4e8211f37, type: 3}
   weaponStats:
-    fireRate: 0.1
+    fireRate: 0.09
     damage: 10
     ammoCapacity: 100

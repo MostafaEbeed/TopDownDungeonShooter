@@ -116,6 +116,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponNext"",
+                    ""type"": ""Button"",
+                    ""id"": ""46fe68a6-40fc-4788-a43b-f72922f05e5f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchWeaponPrevious"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f137057-3265-4da2-8b17-c8b3b6a1694c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bcc1ab4-ddac-428c-9499-da97d30ce960"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +299,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Gadget2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96153f5a-75e2-4169-8a27-8ce8ec002078"",
+                    ""path"": ""<Mouse>/forwardButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponNext"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3825994-9021-43d8-a9a4-7e78d317ff58"",
+                    ""path"": ""<Mouse>/backButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchWeaponPrevious"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7f86495-a00f-4a02-86bd-f5357d6adc42"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +350,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_HoldGadget = m_Gameplay.FindAction("HoldGadget", throwIfNotFound: true);
         m_Gameplay_Gadget1 = m_Gameplay.FindAction("Gadget1", throwIfNotFound: true);
         m_Gameplay_Gadget2 = m_Gameplay.FindAction("Gadget2", throwIfNotFound: true);
+        m_Gameplay_SwitchWeaponNext = m_Gameplay.FindAction("SwitchWeaponNext", throwIfNotFound: true);
+        m_Gameplay_SwitchWeaponPrevious = m_Gameplay.FindAction("SwitchWeaponPrevious", throwIfNotFound: true);
+        m_Gameplay_ToggleInventory = m_Gameplay.FindAction("ToggleInventory", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +424,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_HoldGadget;
     private readonly InputAction m_Gameplay_Gadget1;
     private readonly InputAction m_Gameplay_Gadget2;
+    private readonly InputAction m_Gameplay_SwitchWeaponNext;
+    private readonly InputAction m_Gameplay_SwitchWeaponPrevious;
+    private readonly InputAction m_Gameplay_ToggleInventory;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -375,6 +441,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @HoldGadget => m_Wrapper.m_Gameplay_HoldGadget;
         public InputAction @Gadget1 => m_Wrapper.m_Gameplay_Gadget1;
         public InputAction @Gadget2 => m_Wrapper.m_Gameplay_Gadget2;
+        public InputAction @SwitchWeaponNext => m_Wrapper.m_Gameplay_SwitchWeaponNext;
+        public InputAction @SwitchWeaponPrevious => m_Wrapper.m_Gameplay_SwitchWeaponPrevious;
+        public InputAction @ToggleInventory => m_Wrapper.m_Gameplay_ToggleInventory;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -414,6 +483,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Gadget2.started += instance.OnGadget2;
             @Gadget2.performed += instance.OnGadget2;
             @Gadget2.canceled += instance.OnGadget2;
+            @SwitchWeaponNext.started += instance.OnSwitchWeaponNext;
+            @SwitchWeaponNext.performed += instance.OnSwitchWeaponNext;
+            @SwitchWeaponNext.canceled += instance.OnSwitchWeaponNext;
+            @SwitchWeaponPrevious.started += instance.OnSwitchWeaponPrevious;
+            @SwitchWeaponPrevious.performed += instance.OnSwitchWeaponPrevious;
+            @SwitchWeaponPrevious.canceled += instance.OnSwitchWeaponPrevious;
+            @ToggleInventory.started += instance.OnToggleInventory;
+            @ToggleInventory.performed += instance.OnToggleInventory;
+            @ToggleInventory.canceled += instance.OnToggleInventory;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -448,6 +526,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Gadget2.started -= instance.OnGadget2;
             @Gadget2.performed -= instance.OnGadget2;
             @Gadget2.canceled -= instance.OnGadget2;
+            @SwitchWeaponNext.started -= instance.OnSwitchWeaponNext;
+            @SwitchWeaponNext.performed -= instance.OnSwitchWeaponNext;
+            @SwitchWeaponNext.canceled -= instance.OnSwitchWeaponNext;
+            @SwitchWeaponPrevious.started -= instance.OnSwitchWeaponPrevious;
+            @SwitchWeaponPrevious.performed -= instance.OnSwitchWeaponPrevious;
+            @SwitchWeaponPrevious.canceled -= instance.OnSwitchWeaponPrevious;
+            @ToggleInventory.started -= instance.OnToggleInventory;
+            @ToggleInventory.performed -= instance.OnToggleInventory;
+            @ToggleInventory.canceled -= instance.OnToggleInventory;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -477,5 +564,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnHoldGadget(InputAction.CallbackContext context);
         void OnGadget1(InputAction.CallbackContext context);
         void OnGadget2(InputAction.CallbackContext context);
+        void OnSwitchWeaponNext(InputAction.CallbackContext context);
+        void OnSwitchWeaponPrevious(InputAction.CallbackContext context);
+        void OnToggleInventory(InputAction.CallbackContext context);
     }
 }
